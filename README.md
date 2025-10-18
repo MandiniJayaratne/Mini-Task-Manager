@@ -2,7 +2,7 @@
 
 **MiniTask** is a task management web application built with **ASP.NET Core (.NET 6+)**, using **Razor Pages / MVC** for the front-end and **RESTful APIs** for the back-end. It uses **Entity Framework Core** for database operations.
 
-This project allows users to create, view, update, and delete tasks efficiently.
+This project allows users to create, view, update, and delete tasks efficiently with Title/Description/Status/Due Date.
 
 ---
 
