@@ -1,0 +1,71 @@
+﻿@model List<MiniTask.Web.Models.TaskItem>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard";
+
+    
+    var searchString = ViewContext.HttpContext.Request.Query["searchString"].ToString();
+    var statusFilter = ViewContext.HttpContext.Request.Query["statusFilter"].ToString();
+}
+
+<h2>Tasks Dashboard</h2>
+
+<a href="/Task/Create" class="btn btn-primary mb-3">Create New Task</a>
+
+<!-- Search and Filter -->
+<form method="get" class="mb-3 row g-2">
+    <div class="col-auto">
+        <input type="text" name="searchString" class="form-control" placeholder="Search tasks..." value="@searchString" />
+    </div>
+    <div class="col-auto">
+        <select name="statusFilter" class="form-select">
+            <option value="All" selected="@(statusFilter == "All")">All</option>
+            <option value="To Do" selected="@(statusFilter == "To Do")">To Do</option>
+            <option value="In Progress" selected="@(statusFilter == "In Progress")">In Progress</option>
+            <option value="Done" selected="@(statusFilter == "Done")">Done</option>
+
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </div>
+</form>
+
+<!-- Tasks Table -->
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var task in Model)
+            {
+                <tr>
+                    <td>@task.Title</td>
+                    <td>@task.Description</td>
+                    <td>@task.Status</td>
+                    <td>@task.DueDate?.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a href="/Task/Edit/@task.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/Task/Delete/@task.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center">No tasks found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
